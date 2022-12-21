@@ -1,5 +1,5 @@
 --[[
-Salus IT600 thermostats integration v 1.0.0
+Salus IT600 thermostats integration v 1.1.0
 @author ikubicki
 ]]
 
@@ -12,6 +12,7 @@ function QuickApp:onInit()
     self:updateProperty('manufacturer', 'Salus')
     self:updateProperty('model', 'IT600')
     self.childrenIds = {}
+    self.interfaces = api.get("/devices/" .. self.id).interfaces
 
     self:updateProperty("supportedThermostatModes", {"Off", "Heat", "Auto"})
     self:updateProperty("heatingThermostatSetpointCapabilitiesMax", 35)
@@ -94,6 +95,7 @@ end
 
 function QuickApp:pullDataFromCloud()
     local getPropertiesCallback = function(properties)
+        -- QuickApp:debug(json.encode(properties))
         self:updateView("button2_2", "text", self.i18n:get('refresh'))
         if self.childrenIds["com.fibaro.temperatureSensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.temperatureSensor"]]:setValue(properties.temperature)
@@ -117,7 +119,22 @@ function QuickApp:pullDataFromCloud()
         self:updateProperty("thermostatMode", mode)
         self:updateProperty("heatingThermostatSetpoint", properties.heatingSetpoint)
         self:updateView("label1", "text", string.format(self.i18n:get('last-update'), os.date('%Y-%m-%d %H:%M:%S')))
-        -- QuickApp:debug(json.encode(properties))
+        
+        if properties.battery ~= nil then
+            self:updateProperty("batteryLevel", Salus:translateBatteryLevel(properties.battery))
+            if not utils:contains(self.interfaces, "battery") then
+                api.put("/devices/" .. self.id, { interfaces = {
+                    "quickApp", "battery", "heatingThermostatSetpoint", "thermostatMode"
+                }})
+            end
+        else
+
+            if not utils:contains(self.interfaces, "power") then
+                api.put("/devices/" .. self.id, { interfaces = {
+                    "quickApp", "power", "heatingThermostatSetpoint", "thermostatMode"
+                }})
+            end
+        end
     end
     self:updateView("button2_2", "text", self.i18n:get('refreshing'))
     self.salus:getProperties(getPropertiesCallback)
@@ -127,7 +144,7 @@ function QuickApp:searchEvent(param)
     self:debug(self.i18n:get('searching-devices'))
     self:updateView("button2_1", "text", self.i18n:get('searching-devices'))
     local searchDevicesCallback = function(gateways)
-        QuickApp:debug(json.encode(gateways))
+        -- QuickApp:debug(json.encode(gateways))
         self:updateView("button2_1", "text", self.i18n:get('search-devices'))
         -- printing results
         for _, gateway in pairs(gateways) do

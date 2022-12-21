@@ -27,3 +27,8 @@ To change update interval add Interval property or replace existing one (if ther
 ## Notes
 
 Salus API is locking account for 30 minutes after few invalid login attempts. If you'll change your password, virtual devices may lock your account.
+
+## Changes
+
+### v.1.1.0
+ - Feature: Battery level reporting

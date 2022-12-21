@@ -17,9 +17,13 @@ end
 
 function Salus:getProperties(callback)
     local properties = {}
+    local batteryLevelCallback = function(response)
+        properties["battery"] = response.value
+        callback(properties)
+    end
     local holdtypeCallback = function(response)
         properties["holdtype"] = response.value
-        callback(properties)
+        Salus:batteryLevel(batteryLevelCallback)
     end
     local runningCallback = function(response)
         properties["running"] = response.value
@@ -80,6 +84,46 @@ function Salus:searchDevices(callback)
         Salus:listDevices(listDevicesCallback)
     end
     Salus:auth(authCallback)
+end
+
+function Salus:batteryLevel(callback, attempt)
+    if attempt == nil then
+        attempt = 1
+    end
+    local fail = function(response)
+        if response.status == 404 then
+            return callback({})
+        end
+        QuickApp:error('Unable to pull battery level')
+        Salus:setToken('')
+        -- QuickApp:debug(json.encode(response))
+        
+        if attempt < 2 then
+            attempt = attempt + 1
+            fibaro.setTimeout(3000, function()
+                QuickApp:debug('Salus:batteryLevel - Retry attempt #' .. attempt)
+                local authCallback = function(response)
+                    self:batteryLevel(callback, attempt)
+                end
+                Salus:auth(authCallback)
+            end)
+        end
+    end
+    local success = function(response)
+        if response.status > 299 then
+            fail(response)
+            return
+        end
+        local data = json.decode(response.data)
+        if callback ~= nil then
+            callback(data.property)
+        end
+    end
+    local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:BatteryLevel.json"
+    local headers = {
+        Authorization = "Bearer " .. Salus:getToken()
+    }
+    self.http:get(url, success, fail, headers)
 end
 
 function Salus:temperature(callback, attempt)
@@ -350,4 +394,12 @@ function Salus:getToken()
         return Globals:get('salus_token', '')
     end
     return nil
+end
+
+function Salus:translateBatteryLevel(batteryLevel)
+    if batteryLevel > 4 then return 100 end;
+    if batteryLevel == 4 then return 75 end;
+    if batteryLevel == 3 then return 50 end;
+    if batteryLevel == 2 then return 25 end;
+    if batteryLevel > 2 then return 0 end;
 end
