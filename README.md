@@ -32,3 +32,6 @@ Salus API is locking account for 30 minutes after few invalid login attempts. If
 
 ### v.1.1.0
  - Feature: Battery level reporting
+
+### v.1.1.1
+ - Fix: Auth token refreshing
