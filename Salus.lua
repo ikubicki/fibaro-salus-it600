@@ -9,6 +9,7 @@ function Salus:new(config)
     self.pass = config:getPassword()
     self.device_id = config:getDeviceID()
     self.token = Globals:get('salus_token', '')
+    self.token_time = tonumber(Globals:get('salus_token_time', 0))
     self.http = HTTPClient:new({
         baseUrl = 'https://eu.salusconnect.io'
     })
@@ -358,7 +359,7 @@ function Salus:auth(callback)
         Salus:setToken('')
     end
     local success = function(response)
-        QuickApp:debug(json.encode(response))
+        -- QuickApp:debug(json.encode(response))
         if response.status > 299 then
             fail(response)
             return
@@ -384,16 +385,29 @@ end
 
 function Salus:setToken(token)
     self.token = token
+    self.token_time = os.time(os.date("!*t"))
     Globals:set('salus_token', token)
+    Globals:set('salus_token_time', self.token_time)
 end
 
 function Salus:getToken()
+    if not self:checkTokenTime() then
+        self:setToken('')
+        return ''
+    end
     if string.len(self.token) > 10 then
         return self.token
     elseif string.len(Globals:get('salus_token', '')) > 10 then
         return Globals:get('salus_token', '')
     end
-    return nil
+    return ''
+end
+
+function Salus:checkTokenTime()
+    if self.token_time < 1 then
+        self.token_time = tonumber(Globals:get('salus_token_time', 0))
+    end
+    return self.token_time > 0 and os.time(os.date("!*t")) - self.token_time < 43200
 end
 
 function Salus:translateBatteryLevel(batteryLevel)

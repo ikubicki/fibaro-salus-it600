@@ -1,5 +1,5 @@
 --[[
-Salus IT600 thermostats integration v 1.1.0
+Salus IT600 thermostats integration v 1.1.1
 @author ikubicki
 ]]
 
