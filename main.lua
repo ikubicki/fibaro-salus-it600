@@ -5,6 +5,7 @@ Salus IT600 thermostats integration v 1.1.1
 
 function QuickApp:onInit()
     self.config = Config:new(self)
+    self.failover = false
     self.salus = Salus:new(self.config)
     self.i18n = i18n:new(api.get("/settings/info").defaultLanguage)
     self:trace('')
@@ -88,13 +89,20 @@ end
 function QuickApp:run()
     self:pullDataFromCloud()
     local interval = self.config:getInterval()
+    if self.failover then
+        interval = 300000
+    end
     if (interval > 0) then
         fibaro.setTimeout(interval, function() self:run() end)
     end
 end
 
 function QuickApp:pullDataFromCloud()
+    local getFailCallback = function()
+        self.failover = true
+    end
     local getPropertiesCallback = function(properties)
+        self.failover = false
         -- QuickApp:debug(json.encode(properties))
         self:updateView("button2_2", "text", self.i18n:get('refresh'))
         if self.childrenIds["com.fibaro.temperatureSensor"] ~= nil then
@@ -137,7 +145,7 @@ function QuickApp:pullDataFromCloud()
         end
     end
     self:updateView("button2_2", "text", self.i18n:get('refreshing'))
-    self.salus:getProperties(getPropertiesCallback)
+    self.salus:getProperties(getPropertiesCallback, getFailCallback)
 end
 
 function QuickApp:searchEvent(param)

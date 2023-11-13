@@ -16,7 +16,7 @@ function Salus:new(config)
     return self
 end
 
-function Salus:getProperties(callback)
+function Salus:getProperties(callback, failCallback)
     local properties = {}
     local batteryLevelCallback = function(response)
         properties["battery"] = response.value
@@ -45,7 +45,7 @@ function Salus:getProperties(callback)
     local authCallback = function(response)
         Salus:temperature(temperatureCallback)
     end
-    Salus:auth(authCallback)
+    Salus:auth(authCallback, failCallback)
 end
 
 function Salus:searchDevices(callback)
@@ -346,7 +346,7 @@ function Salus:listDevices(callback, fail, attempt)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:auth(callback)
+function Salus:auth(callback, failCallback)
     if string.len(self.token) > 1 then
         -- QuickApp:debug('Already authenticated')
         if callback ~= nil then
@@ -355,6 +355,9 @@ function Salus:auth(callback)
         return
     end
     local fail = function(response)
+        if failCallback then
+            failCallback(response.status)
+        end
         QuickApp:error('Unable to authenticate')
         Salus:setToken('')
     end
