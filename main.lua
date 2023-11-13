@@ -1,6 +1,7 @@
 --[[
-Salus IT600 thermostats integration v 1.1.1
+Salus IT600 thermostats integration
 @author ikubicki
+@version 1.1.1
 ]]
 
 function QuickApp:onInit()
@@ -98,7 +99,9 @@ function QuickApp:run()
 end
 
 function QuickApp:pullDataFromCloud()
-    local getFailCallback = function()
+    local getFailCallback = function(error)
+        self:updateView("button2_2", "text", self.i18n:get('refresh'))
+        self:updateView("label1", "text", "API Error: " .. error)
         self.failover = true
     end
     local getPropertiesCallback = function(properties)

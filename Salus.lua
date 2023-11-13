@@ -24,26 +24,26 @@ function Salus:getProperties(callback, failCallback)
     end
     local holdtypeCallback = function(response)
         properties["holdtype"] = response.value
-        Salus:batteryLevel(batteryLevelCallback)
+        Salus:batteryLevel(batteryLevelCallback, failCallback)
     end
     local runningCallback = function(response)
         properties["running"] = response.value
-        Salus:holdtype(holdtypeCallback)
+        Salus:holdtype(holdtypeCallback, failCallback)
     end
     local humidityCallback = function(response)
         properties["humidity"] = response.value
-        Salus:running(runningCallback)
+        Salus:running(runningCallback, failCallback)
     end
     local heatingSetpointCallback = function(response)
         properties["heatingSetpoint"] = response.value / 100
-        Salus:humidity(humidityCallback)
+        Salus:humidity(humidityCallback, failCallback)
     end
     local temperatureCallback = function(response)
         properties["temperature"] = response.value / 100
-        Salus:heatingSetpoint(heatingSetpointCallback)
+        Salus:heatingSetpoint(heatingSetpointCallback, failCallback)
     end
     local authCallback = function(response)
-        Salus:temperature(temperatureCallback)
+        Salus:temperature(temperatureCallback, failCallback)
     end
     Salus:auth(authCallback, failCallback)
 end
@@ -87,13 +87,16 @@ function Salus:searchDevices(callback)
     Salus:auth(authCallback)
 end
 
-function Salus:batteryLevel(callback, attempt)
+function Salus:batteryLevel(callback, failCallback, attempt)
     if attempt == nil then
         attempt = 1
     end
     local fail = function(response)
         if response.status == 404 then
             return callback({})
+        end
+        if failCallback then
+            failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull battery level')
         Salus:setToken('')
@@ -104,9 +107,9 @@ function Salus:batteryLevel(callback, attempt)
             fibaro.setTimeout(3000, function()
                 QuickApp:debug('Salus:batteryLevel - Retry attempt #' .. attempt)
                 local authCallback = function(response)
-                    self:batteryLevel(callback, attempt)
+                    self:batteryLevel(callback, failCallback, attempt)
                 end
-                Salus:auth(authCallback)
+                Salus:auth(authCallback, failCallback)
             end)
         end
     end
@@ -127,23 +130,26 @@ function Salus:batteryLevel(callback, attempt)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:temperature(callback, attempt)
+function Salus:temperature(callback, failCallback, attempt)
     if attempt == nil then
         attempt = 1
     end
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to pull temperature')
         Salus:setToken('')
-        QuickApp:debug(json.encode(response))
+        --QuickApp:debug(json.encode(response))
         
         if attempt < 2 then
             attempt = attempt + 1
             fibaro.setTimeout(3000, function()
                 QuickApp:debug('Salus:temperature - Retry attempt #' .. attempt)
                 local authCallback = function(response)
-                    self:temperature(callback, attempt)
+                    self:temperature(callback, failCallback, attempt)
                 end
-                Salus:auth(authCallback)
+                Salus:auth(authCallback, failCallback)
             end)
         end
     end
@@ -164,8 +170,11 @@ function Salus:temperature(callback, attempt)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:heatingSetpoint(callback)
+function Salus:heatingSetpoint(callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to pull heating setpoint')
         Salus:setToken('')
     end
@@ -186,8 +195,11 @@ function Salus:heatingSetpoint(callback)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:setHeatingSetpoint(heatingSetpoint, callback)
+function Salus:setHeatingSetpoint(heatingSetpoint, callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to update heatingSetpoint')
         Salus:setToken('')
     end
@@ -214,8 +226,11 @@ function Salus:setHeatingSetpoint(heatingSetpoint, callback)
     self.http:post(url, data, success, fail, headers)
 end
 
-function Salus:humidity(callback)
+function Salus:humidity(callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to pull humidity')
         Salus:setToken('')
     end
@@ -236,8 +251,11 @@ function Salus:humidity(callback)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:running(callback)
+function Salus:running(callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to pull mode')
         Salus:setToken('')
     end
@@ -258,8 +276,11 @@ function Salus:running(callback)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:holdtype(callback)
+function Salus:holdtype(callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to pull mode')
         Salus:setToken('')
     end
@@ -280,8 +301,11 @@ function Salus:holdtype(callback)
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:setHoldtype(holdtype, callback)
+function Salus:setHoldtype(holdtype, callback, failCallback)
     local fail = function(response)
+        if failCallback then
+            failCallback(json.encode(response))
+        end
         QuickApp:error('Unable to update holdtype')
         Salus:setToken('')
     end
@@ -314,6 +338,9 @@ function Salus:listDevices(callback, fail, attempt)
     end
     if fail == nil then
         local fail = function(response)
+            if failCallback then
+                failCallback(json.encode(response))
+            end
             QuickApp:error('Unable to pull devices')
             Salus:setToken('')
             
@@ -356,7 +383,7 @@ function Salus:auth(callback, failCallback)
     end
     local fail = function(response)
         if failCallback then
-            failCallback(response.status)
+            failCallback(json.encode(response))
         end
         QuickApp:error('Unable to authenticate')
         Salus:setToken('')
