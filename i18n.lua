@@ -33,6 +33,8 @@ phrases = {
         ['search-row-gateway'] = '__ BRAMKA %s (# %s)',
         ['search-row-gateway-devices'] = '__ Wykryto %d urządzeń',
         ['search-row-device'] = '____ URZĄDZENIE %s (DeviceID: %s, Model: %s)',
+        ['heating'] = 'Grzanie',
+        ['off'] = 'Wyłączony',
     },
     en = {
         ['name'] = 'Salus IT600 - %s',
@@ -47,5 +49,7 @@ phrases = {
         ['search-row-gateway'] = '__ GATEWAY %s (# %s)',
         ['search-row-gateway-devices'] = '__ %d devices found',
         ['search-row-device'] = '____ DEVICE %s (DeviceID: %s, Model: %s)',
+        ['heating'] = 'Heating',
+        ['off'] = 'Off',
     },
 }

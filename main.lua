@@ -1,7 +1,7 @@
 --[[
 Salus IT600 thermostats integration
 @author ikubicki
-@version 1.1.1
+@versio 1.3.0
 ]]
 
 function QuickApp:onInit()
@@ -102,17 +102,21 @@ function QuickApp:pullDataFromCloud()
     local getFailCallback = function(error)
         self:updateView("button2_2", "text", self.i18n:get('refresh'))
         self:updateView("label1", "text", "API Error: " .. error)
+        self:updateView("label2", "text", "")
         self.failover = true
     end
     local getPropertiesCallback = function(properties)
+        local label2Text = ""
         self.failover = false
         -- QuickApp:debug(json.encode(properties))
         self:updateView("button2_2", "text", self.i18n:get('refresh'))
         if self.childrenIds["com.fibaro.temperatureSensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.temperatureSensor"]]:setValue(properties.temperature)
+            label2Text = properties.temperature .. "C / " .. properties.heatingSetpoint .. "C" 
         end
         if self.childrenIds["com.fibaro.humiditySensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.humiditySensor"]]:setValue(properties.humidity)
+            label2Text = label2Text .. " / " .. properties.humidity .. "%"
         end
         if self.childrenIds["com.fibaro.binarySwitch"] ~= nil then
             local isRunningValue = 0
@@ -120,6 +124,11 @@ function QuickApp:pullDataFromCloud()
                 isRunningValue = 1
             end
             self.childDevices[self.childrenIds["com.fibaro.binarySwitch"]]:setValue(isRunningValue > 0)
+            if isRunningValue > 0 then
+                label2Text = self.i18n:get('heating') .. " / " .. label2Text
+            else
+                label2Text = self.i18n:get('off') .. " / " .. label2Text
+            end
         end
         local mode = 'Auto' -- 0 or 1
         if properties.holdtype == 2 then
@@ -130,6 +139,7 @@ function QuickApp:pullDataFromCloud()
         self:updateProperty("thermostatMode", mode)
         self:updateProperty("heatingThermostatSetpoint", properties.heatingSetpoint)
         self:updateView("label1", "text", string.format(self.i18n:get('last-update'), os.date('%Y-%m-%d %H:%M:%S')))
+        self:updateView("label2", "text", label2Text)
         
         if properties.battery ~= nil then
             self:updateProperty("batteryLevel", Salus:translateBatteryLevel(properties.battery))
