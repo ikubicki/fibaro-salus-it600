@@ -30,6 +30,12 @@ Salus API is locking account for 30 minutes after few invalid login attempts. If
 
 ## Changes
 
+### v.1.3.0
+ - UI improvements
+
+### v.1.2.0
+ - Improved API error handling
+
 ### v.1.1.0
  - Feature: Battery level reporting
 
