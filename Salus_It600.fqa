@@ -1,7 +1,7 @@
 {
     "name": "Salus IT600",
     "type": "com.fibaro.hvacSystemHeat",
-    "apiVersion": "1.2",
+    "apiVersion": "1.3",
     "initialProperties": {
         "viewLayout": {
             "$jason": {
@@ -10,19 +10,45 @@
                         "style": {
                             "height": "0"
                         },
-                        "title": "salus130"
+                        "title": "salus_it600"
                     },
                     "sections": {
                         "items": [
                             {
                                 "components": [
                                     {
-                                        "name": "label1",
+                                        "name": "title",
                                         "style": {
                                             "weight": "1.2"
                                         },
                                         "text": "Salus IT600",
                                         "type": "label",
+                                        "visible": true
+                                    },
+                                    {
+                                        "style": {
+                                            "weight": "0.5"
+                                        },
+                                        "type": "space"
+                                    }
+                                ],
+                                "style": {
+                                    "weight": "1.2"
+                                },
+                                "type": "vertical"
+                            },
+                            {
+                                "components": [
+                                    {
+                                        "name": "deviceSelect",
+                                        "options": [],
+                                        "selectionType": "single",
+                                        "style": {
+                                            "weight": "1.2"
+                                        },
+                                        "text": "Wybierz urządzenie",
+                                        "type": "select",
+                                        "values": [],
                                         "visible": true
                                     },
                                     {
@@ -80,6 +106,52 @@
                             {
                                 "components": [
                                     {
+                                        "name": "button2_2__b",
+                                        "style": {
+                                            "weight": "1.2"
+                                        },
+                                        "text": "Odśwież dane",
+                                        "type": "button",
+                                        "visible": false
+                                    },
+                                    {
+                                        "style": {
+                                            "weight": "0.5"
+                                        },
+                                        "type": "space"
+                                    }
+                                ],
+                                "style": {
+                                    "weight": "1.2"
+                                },
+                                "type": "vertical"
+                            },
+                            {
+                                "components": [
+                                    {
+                                        "name": "label1",
+                                        "style": {
+                                            "weight": "1.2"
+                                        },
+                                        "text": "",
+                                        "type": "label",
+                                        "visible": true
+                                    },
+                                    {
+                                        "style": {
+                                            "weight": "0.5"
+                                        },
+                                        "type": "space"
+                                    }
+                                ],
+                                "style": {
+                                    "weight": "1.2"
+                                },
+                                "type": "vertical"
+                            },
+                            {
+                                "components": [
+                                    {
                                         "name": "label2",
                                         "style": {
                                             "weight": "1.2"
@@ -104,25 +176,311 @@
                     }
                 },
                 "head": {
-                    "title": "salus130"
+                    "title": "salus_it600"
                 }
             }
         },
+        "uiView": [
+            {
+                "components": [
+                    {
+                        "name": "title",
+                        "style": {
+                            "weight": "1.0"
+                        },
+                        "text": "Salus IT600",
+                        "type": "label",
+                        "visible": true
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            },
+            {
+                "components": [
+                    {
+                        "eventBinding": {
+                            "onToggled": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onToggled",
+                                            "deviceSelect",
+                                            "$event.value"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ]
+                        },
+                        "name": "deviceSelect",
+                        "options": [],
+                        "selectionType": "single",
+                        "style": {
+                            "weight": "1.0"
+                        },
+                        "text": "Wybierz urządzenie",
+                        "type": "select",
+                        "values": [],
+                        "visible": true
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            },
+            {
+                "components": [
+                    {
+                        "eventBinding": {
+                            "onLongPressDown": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressDown",
+                                            "button2_1"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onLongPressReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressReleased",
+                                            "button2_1"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onReleased",
+                                            "button2_1"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ]
+                        },
+                        "name": "button2_1",
+                        "style": {
+                            "weight": "0.50"
+                        },
+                        "text": "Szukaj urządzeń",
+                        "type": "button",
+                        "visible": true
+                    },
+                    {
+                        "eventBinding": {
+                            "onLongPressDown": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressDown",
+                                            "button2_2"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onLongPressReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressReleased",
+                                            "button2_2"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onReleased",
+                                            "button2_2"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ]
+                        },
+                        "name": "button2_2",
+                        "style": {
+                            "weight": "0.50"
+                        },
+                        "text": "Odśwież dane",
+                        "type": "button",
+                        "visible": true
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            },
+            {
+                "components": [
+                    {
+                        "eventBinding": {
+                            "onLongPressDown": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressDown",
+                                            "button2_2__b"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onLongPressReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onLongPressReleased",
+                                            "button2_2__b"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ],
+                            "onReleased": [
+                                {
+                                    "params": {
+                                        "actionName": "UIAction",
+                                        "args": [
+                                            "onReleased",
+                                            "button2_2__b"
+                                        ]
+                                    },
+                                    "type": "deviceAction"
+                                }
+                            ]
+                        },
+                        "name": "button2_2__b",
+                        "style": {
+                            "weight": "1.0"
+                        },
+                        "text": "Odśwież dane",
+                        "type": "button",
+                        "visible": false
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            },
+            {
+                "components": [
+                    {
+                        "name": "label1",
+                        "style": {
+                            "weight": "1.0"
+                        },
+                        "text": "",
+                        "type": "label",
+                        "visible": true
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            },
+            {
+                "components": [
+                    {
+                        "name": "label2",
+                        "style": {
+                            "weight": "1.0"
+                        },
+                        "text": "",
+                        "type": "label",
+                        "visible": true
+                    }
+                ],
+                "style": {
+                    "weight": "1.0"
+                },
+                "type": "horizontal"
+            }
+        ],
+        "useUiView": true,
         "uiCallbacks": [
+            {
+                "callback": "selectDeviceEvent",
+                "eventType": "onToggled",
+                "name": "deviceSelect"
+            },
             {
                 "callback": "searchEvent",
                 "eventType": "onReleased",
                 "name": "button2_1"
             },
             {
+                "callback": "",
+                "eventType": "onLongPressDown",
+                "name": "button2_1"
+            },
+            {
+                "callback": "",
+                "eventType": "onLongPressReleased",
+                "name": "button2_1"
+            },
+            {
                 "callback": "refreshEvent",
                 "eventType": "onReleased",
                 "name": "button2_2"
+            },
+            {
+                "callback": "",
+                "eventType": "onLongPressDown",
+                "name": "button2_2"
+            },
+            {
+                "callback": "",
+                "eventType": "onLongPressReleased",
+                "name": "button2_2"
+            },
+            {
+                "callback": "refreshEvent",
+                "eventType": "onReleased",
+                "name": "button2_2__b"
+            },
+            {
+                "callback": "",
+                "eventType": "onLongPressDown",
+                "name": "button2_2__b"
+            },
+            {
+                "callback": "",
+                "eventType": "onLongPressReleased",
+                "name": "button2_2__b"
             }
         ],
         "quickAppVariables": [
             {
-                "name": "Username",
+                "name": "User",
                 "type": "string",
                 "value": ""
             },
@@ -132,6 +490,16 @@
                 "value": ""
             },
             {
+                "name": "Host",
+                "type": "string",
+                "value": ""
+            },
+            {
+                "name": "Port",
+                "type": "string",
+                "value": "80"
+            },
+            {
                 "name": "DeviceID",
                 "type": "string",
                 "value": ""
@@ -139,24 +507,25 @@
             {
                 "name": "Interval",
                 "type": "string",
-                "value": "30"
+                "value": 5
             }
         ],
-        "typeTemplateInitialized": true
+        "typeTemplateInitialized": true,
+        "userDescription": ""
     },
     "initialInterfaces": [],
     "files": [
         {
             "name": "main",
             "isMain": true,
-            "isOpen": false,
-            "content": "--[[\nSalus IT600 thermostats integration\n@author ikubicki\n@version 1.3.0\n]]\n\nfunction QuickApp:onInit()\n    self.config = Config:new(self)\n    self.failover = false\n    self.salus = Salus:new(self.config)\n    self.i18n = i18n:new(api.get(\"/settings/info\").defaultLanguage)\n    self:trace('')\n    self:trace(string.format(self.i18n:get('name'), self.name))\n    self:updateProperty('manufacturer', 'Salus')\n    self:updateProperty('model', 'IT600')\n    self.childrenIds = {}\n    self.interfaces = api.get(\"/devices/\" .. self.id).interfaces\n\n    self:updateProperty(\"supportedThermostatModes\", {\"Off\", \"Heat\", \"Auto\"})\n    self:updateProperty(\"heatingThermostatSetpointCapabilitiesMax\", 35)\n    self:updateProperty(\"heatingThermostatSetpointCapabilitiesMin\", 10)\n\n    self:updateView(\"label1\", \"text\", string.format(self.i18n:get('name'), self.name))\n    self:updateView(\"button2_1\", \"text\", self.i18n:get('search-devices'))\n    self:updateView(\"button2_2\", \"text\", self.i18n:get('refresh'))\n\n    self:initChildDevices({\n        [\"com.fibaro.temperatureSensor\"] = SalusChildDevice,\n        [\"com.fibaro.humiditySensor\"] = SalusChildDevice,\n        [\"com.fibaro.binarySwitch\"] = SalusChildDevice,\n    })\n    for id, device in pairs(self.childDevices) do\n        self.childrenIds[device.type] = id\n    end\n\n    if string.len(self.config:getDeviceID()) > 10 then\n        if self.childrenIds[\"com.fibaro.temperatureSensor\"] == nil then\n            local child = self:createChildDevice({\n                name = self.name .. ' Temperature',\n                type = \"com.fibaro.temperatureSensor\",\n            }, SalusChildDevice)\n        end\n        if self.childrenIds[\"com.fibaro.humiditySensor\"] == nil then\n            local child = self:createChildDevice({\n                name = self.name .. ' Humidity',\n                type = \"com.fibaro.humiditySensor\",\n            }, SalusChildDevice)\n        end\n        if self.childrenIds[\"com.fibaro.binarySwitch\"] == nil then\n            local child = self:createChildDevice({\n                name = self.name .. ' Heating',\n                type = \"com.fibaro.binarySwitch\",\n                deviceRole = 'Valve',\n                isLight = false,\n            }, SalusChildDevice)\n        end\n        self:run()\n    else \n        self:updateView(\"label1\", \"text\", self.i18n:get('not-configured'))\n    end\nend\n\nfunction QuickApp:setThermostatMode(mode)\n    self:updateProperty(\"thermostatMode\", mode)\n    local holdtype = 0\n    if mode == 'Off' then\n        holdtype = 7\n    elseif mode == 'Heat' then\n        holdtype = 2\n    end\n    local setHoldtypeCallback = function(response)\n        self:pullDataFromCloud()\n    end\n    self.salus:setHoldtype(holdtype, setHoldtypeCallback)\nend\n\nfunction QuickApp:setHeatingThermostatSetpoint(value) \n    self:updateProperty(\"heatingThermostatSetpoint\", value)\n    local setHeatingSetpointCallback = function(response)\n        self:pullDataFromCloud()\n    end\n    self.salus:setHeatingSetpoint(value, setHeatingSetpointCallback)\nend\n\nfunction QuickApp:refreshEvent(event)\n    self:updateView(\"label\", \"text\", self.i18n:get('refreshing'))\n    self:pullDataFromCloud()\nend\n\nfunction QuickApp:run()\n    self:pullDataFromCloud()\n    local interval = self.config:getInterval()\n    if self.failover then\n        interval = 300000\n    end\n    if (interval > 0) then\n        fibaro.setTimeout(interval, function() self:run() end)\n    end\nend\n\nfunction QuickApp:pullDataFromCloud()\n    local getFailCallback = function(error)\n        self:updateView(\"button2_2\", \"text\", self.i18n:get('refresh'))\n        self:updateView(\"label1\", \"text\", \"API Error: \" .. error)\n        self:updateView(\"label2\", \"text\", \"\")\n        self.failover = true\n    end\n    local getPropertiesCallback = function(properties)\n        local label2Text = \"\"\n        self.failover = false\n        -- QuickApp:debug(json.encode(properties))\n        self:updateView(\"button2_2\", \"text\", self.i18n:get('refresh'))\n        if self.childrenIds[\"com.fibaro.temperatureSensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.temperatureSensor\"]]:setValue(properties.temperature)\n            label2Text = properties.temperature .. \"C / \" .. properties.heatingSetpoint .. \"C\" \n        end\n        if self.childrenIds[\"com.fibaro.humiditySensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.humiditySensor\"]]:setValue(properties.humidity)\n            label2Text = label2Text .. \" / \" .. properties.humidity .. \"%\"\n        end\n        if self.childrenIds[\"com.fibaro.binarySwitch\"] ~= nil then\n            local isRunningValue = 0\n            if properties.running and properties.running > 0 then\n                isRunningValue = 1\n            end\n            self.childDevices[self.childrenIds[\"com.fibaro.binarySwitch\"]]:setValue(isRunningValue > 0)\n            if isRunningValue > 0 then\n                label2Text = self.i18n:get('heating') .. \" / \" .. label2Text\n            else\n                label2Text = self.i18n:get('off') .. \" / \" .. label2Text\n            end\n        end\n        local mode = 'Auto' -- 0 or 1\n        if properties.holdtype == 2 then\n            mode = 'Heat'\n        elseif properties.holdtype == 7 then\n            mode = 'Off'\n        end\n        self:updateProperty(\"thermostatMode\", mode)\n        self:updateProperty(\"heatingThermostatSetpoint\", properties.heatingSetpoint)\n        self:updateView(\"label1\", \"text\", string.format(self.i18n:get('last-update'), os.date('%Y-%m-%d %H:%M:%S')))\n        self:updateView(\"label2\", \"text\", label2Text)\n        \n        if properties.battery ~= nil then\n            self:updateProperty(\"batteryLevel\", Salus:translateBatteryLevel(properties.battery))\n            if not utils:contains(self.interfaces, \"battery\") then\n                api.put(\"/devices/\" .. self.id, { interfaces = {\n                    \"quickApp\", \"battery\", \"heatingThermostatSetpoint\", \"thermostatMode\"\n                }})\n            end\n        else\n\n            if not utils:contains(self.interfaces, \"power\") then\n                api.put(\"/devices/\" .. self.id, { interfaces = {\n                    \"quickApp\", \"power\", \"heatingThermostatSetpoint\", \"thermostatMode\"\n                }})\n            end\n        end\n    end\n    self:updateView(\"button2_2\", \"text\", self.i18n:get('refreshing'))\n    self.salus:getProperties(getPropertiesCallback, getFailCallback)\nend\n\nfunction QuickApp:searchEvent(param)\n    self:debug(self.i18n:get('searching-devices'))\n    self:updateView(\"button2_1\", \"text\", self.i18n:get('searching-devices'))\n    local searchDevicesCallback = function(gateways)\n        -- QuickApp:debug(json.encode(gateways))\n        self:updateView(\"button2_1\", \"text\", self.i18n:get('search-devices'))\n        -- printing results\n        for _, gateway in pairs(gateways) do\n            QuickApp:trace(string.format(self.i18n:get('search-row-gateway'), gateway.name, gateway.id))\n            QuickApp:trace(string.format(self.i18n:get('search-row-gateway-devices'), #gateway.devices))\n            for __, device in ipairs(gateway.devices) do\n                QuickApp:trace(string.format(self.i18n:get('search-row-device'), device.name, device.id, device.model))\n            end\n        end\n        self:updateView(\"label2\", \"text\", string.format(self.i18n:get('check-logs'), 'QUICKAPP' .. self.id))\n    end\n    self.salus:searchDevices(searchDevicesCallback)\nend\n"
+            "isOpen": true,
+            "content": "--[[\nSalus IT600 thermostats integration\n@author ikubicki\n@version 2.0.0\n]]\n\nlocal REFRESH_BUTTON = \"button2_2\"\nlocal SEARCH_BUTTON = \"button2_1\"\nlocal STATUS_LABEL = \"label1\"\nlocal STATS_LABEL = \"label2\"\nlocal TITLE_LABEL = \"title\"\n\nfunction QuickApp:onInit()\n    self.config = Config:new(self)\n    self.failover = false\n    -- self.sdk = SalusCloud:new(self.config)\n    self.sdk = SalusProxy:new(self.config)\n    self.i18n = i18n:new(api.get(\"/settings/info\").defaultLanguage)\n    self:trace('')\n    self:trace(string.format(self.i18n:get('name'), self.name))\n    self:updateProperty('manufacturer', 'Salus')\n    self:updateProperty('model', 'IT600')\n    self.childrenIds = {}\n    if not Utils:contains(self.interfaces, \"thermostatOperatingState\") then\n        self:addInterfaces({\"thermostatOperatingState\"})\n    end\n\n    self:searchEvent()\n    if self.config:getDeviceID() then\n        self:updateView(\"deviceSelect\", \"selectedItem\", self.config:getDeviceID())\n    end\n\n    self:updateProperty(\"supportedThermostatModes\", {\"Off\", \"Heat\", \"Auto\"})\n    self:updateProperty(\"heatingThermostatSetpointCapabilitiesMax\", 35)\n    self:updateProperty(\"heatingThermostatSetpointCapabilitiesMin\", 15)\n    self:updateProperty(\"autoThermostatSetpointCapabilitiesMax\", 35)\n    self:updateProperty(\"autoThermostatSetpointCapabilitiesMin\", 15)\n\n    self:updateView(TITLE_LABEL, \"text\", string.format(self.i18n:get('name'), self.name))\n    self:updateView(SEARCH_BUTTON, \"text\", self.i18n:get('search-devices'))\n    self:updateView(REFRESH_BUTTON, \"text\", self.i18n:get('refresh'))\n\n    self:initChildDevices({\n        [\"com.fibaro.temperatureSensor\"] = SalusTemperature,\n        [\"com.fibaro.humiditySensor\"] = SalusHumidity,\n    })\n    for id, device in pairs(self.childDevices) do\n        self.childrenIds[device.type] = id\n    end\n\n    if string.len(self.config:getDeviceID()) > 10 then\n        if self.childrenIds[\"com.fibaro.temperatureSensor\"] == nil then\n            local child = self:createChildDevice({\n                name = self.name .. ' Temperature',\n                type = \"com.fibaro.temperatureSensor\",\n            }, SalusTemperature)\n        end\n        if self.childrenIds[\"com.fibaro.humiditySensor\"] == nil then\n            local child = self:createChildDevice({\n                name = self.name .. ' Humidity',\n                type = \"com.fibaro.humiditySensor\",\n            }, SalusHumidity)\n        end\n        self:run()\n    else \n        self:updateView(STATS_LABEL, \"text\", self.i18n:get('not-configured'))\n    end\nend\n\nfunction QuickApp:setThermostatMode(mode)\n    self:updateProperty(\"thermostatMode\", mode)\n    local ok = function(r)\n        self:updateView(STATUS_LABEL, \"text\", \"Setpoint updated\")\n        self:pullDataFromCloud()\n    end\n    local nok = function(r)\n        self:updateView(STATUS_LABEL, \"text\", r.status .. \": Unable to update thermostat mode\")\n    end\n    self.sdk:setHoldtype(SalusUtils:translateMode(mode), ok, nok)\nend\n\nfunction QuickApp:setHeatingThermostatSetpoint(value) \n    self:updateProperty(\"heatingThermostatSetpoint\", value)\n    local ok = function(response)\n        self:updateView(STATUS_LABEL, \"text\", \"Thermostat mode updated\")\n        self:pullDataFromCloud()\n    end\n    local nok = function(r)\n        self:updateView(STATUS_LABEL, \"text\", r.status .. \": Unable to update thermostat setpoint\")\n    end\n    self.sdk:setHeatingSetpoint(value, ok, nok)\nend\n\nfunction QuickApp:refreshEvent(event)\n    self:updateView(STATUS_LABEL, \"text\", self.i18n:get('refreshing'))\n    self:pullDataFromCloud()\nend\n\nfunction QuickApp:run()\n    self:pullDataFromCloud()\n    local interval = self.config:getInterval()\n    if self.failover then\n        interval = 3600000\n    end\n    if (interval > 0) then\n        fibaro.setTimeout(interval, function() self:run() end)\n    end\nend\n\nfunction QuickApp:pullDataFromCloud()\n    local nok = function(error)\n        self:updateView(REFRESH_BUTTON, \"text\", self.i18n:get('refresh'))\n        self:updateView(STATUS_LABEL, \"text\", error.status .. \": Unable to pull device data\")\n        self:updateView(STATS_LABEL, \"text\", \"\")\n        self.failover = true\n    end\n    local ok = function(properties)\n        local label2Text = \"\"\n        self.failover = false\n        self:updateView(TITLE_LABEL, \"text\", \"Salus \" .. properties.model .. ' - ' .. properties.name)\n        self:updateView(REFRESH_BUTTON, \"text\", self.i18n:get('refresh'))\n        if self.childrenIds[\"com.fibaro.temperatureSensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.temperatureSensor\"]]:setValue(properties.temperature)\n            label2Text = properties.temperature .. \"C / \" .. properties.heatingSetpoint .. \"C\" \n        end\n        if self.childrenIds[\"com.fibaro.humiditySensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.humiditySensor\"]]:setValue(properties.humidity)\n            label2Text = label2Text .. \" / \" .. properties.humidity .. \"%\"\n        end\n        local operatingState = 'Idle'\n        local isRunningValue = 0\n        if properties.running and properties.running > 0 then\n            operatingState = 'Heating'\n            isRunningValue = 1\n        end\n        self:updateProperty(\"thermostatOperatingState\", operatingState)\n        if isRunningValue > 0 then\n            label2Text = self.i18n:get('heating') .. \" / \" .. label2Text\n        else\n            label2Text = self.i18n:get('off') .. \" / \" .. label2Text\n        end\n\n        self:updateProperty(\"thermostatMode\", SalusUtils:translateHoldType(properties.holdtype))\n        self:updateProperty(\"heatingThermostatSetpoint\", properties.heatingSetpoint)\n        self:updateView(STATUS_LABEL, \"text\", string.format(self.i18n:get('last-update'), os.date('%Y-%m-%d %H:%M:%S')))\n        self:updateView(STATS_LABEL, \"text\", label2Text)\n        if properties.battery ~= nil then\n            self:updateProperty(\"batteryLevel\", SalusUtils:translateBattery(properties.battery))\n            if not Utils:contains(self.interfaces, \"battery\") then\n                self:addInterfaces({\"battery\"})\n            end\n        else\n            if not Utils:contains(self.interfaces, \"power\") then\n                self:addInterfaces({\"power\"})\n            end\n        end\n    end\n    self:updateView(REFRESH_BUTTON, \"text\", self.i18n:get('refreshing'))\n    self.sdk:getProperties(ok, nok)\nend\n\nfunction QuickApp:searchEvent(param)\n    self:updateView(STATUS_LABEL, \"text\", self.i18n:get('searching-devices'))\n    self:updateView(SEARCH_BUTTON, \"text\", self.i18n:get('searching-devices'))\n    local searchDevicesCallback = function(gateways)\n        -- QuickApp:debug(json.encode(gateways))\n        self:updateView(SEARCH_BUTTON, \"text\", self.i18n:get('search-devices'))\n        local options = {}\n        for _, gateway in pairs(gateways) do\n            -- do nothing with gateway anymore\n            for __, device in pairs(gateway.devices) do\n                table.insert(options, {\n                    type = 'option',\n                    text = device.model .. ' - ' .. device.name,\n                    value = device.id,\n                })\n            end\n        end\n        self:updateView(\"deviceSelect\", \"options\", options)\n        self:updateView(STATUS_LABEL, \"text\", string.format(self.i18n:get('check-select')))\n    end\n    local nok = function(r)\n        self:updateView(SEARCH_BUTTON, \"text\", self.i18n:get('search-devices'))\n        self:updateView(STATUS_LABEL, \"text\", r.status .. \": Unable to pull devices\")\n    end\n    self.sdk:searchDevices(searchDevicesCallback, nok)\nend\n\nfunction QuickApp:selectDeviceEvent(args)\n    self:setVariable('DeviceID', args.values[1])\n    self:updateView(STATS_LABEL, \"text\", \"\")\n    self:updateView(STATUS_LABEL, \"text\", self.i18n:get('device-selected'))\n    self.config:setDeviceID(args.values[1])\n    local QA = self\n    local ok = function(p)\n        if self.childrenIds[\"com.fibaro.temperatureSensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.temperatureSensor\"]]:setName(\n                string.format(self.i18n:get('temperature-suffix'), p.name)\n            )\n        end\n        if self.childrenIds[\"com.fibaro.humiditySensor\"] ~= nil then\n            self.childDevices[self.childrenIds[\"com.fibaro.humiditySensor\"]]:setName(\n                string.format(self.i18n:get('humidity-suffix'), p.name)\n            )\n        end\n        self:setName(p.name)\n\n    end\n    local nok = function(r)\n        self:updateView(STATUS_LABEL, \"text\", r.status .. \": Unable to pull selected device information\")\n    end\n\n    self.sdk:getProperties(ok, nok)\n\nend\n\nfunction QuickApp:setName(name)\n    api.put('/devices/' .. self.id, {\n        name = name,\n    })\nend\n"
         },
         {
             "name": "Config",
             "isMain": false,
             "isOpen": false,
-            "content": "--[[\nConfiguration handler\n@author ikubicki\n]]\nclass 'Config'\n\nfunction Config:new(app)\n    self.app = app\n    self:init()\n    return self\nend\n\nfunction Config:getUsername()\n    if self.username and self.username:len() > 3 then\n        return self.username\n    end\n    return nil\nend\n\nfunction Config:getPassword()\n    return self.password\nend\n\nfunction Config:getDeviceID()\n    return self.device_id\nend\n\nfunction Config:setDeviceID(device_id)\n    self.device_id = device_id\nend\n\nfunction Config:getInterval()\n    return tonumber(self.interval) * 1000\nend\n\n--[[\nThis function takes variables and sets as global variables if those are not set already.\nThis way, adding other devices might be optional and leaves option for users, \nwhat they want to add into HC3 virtual devices.\n]]\nfunction Config:init()\n    self.username = self.app:getVariable('Username')\n    self.password = self.app:getVariable('Password')\n    self.device_id = self.app:getVariable('DeviceID')\n    self.interval = self.app:getVariable('Interval')\n\n    local storedUsername = Globals:get('salus_username', '')\n    local storedPassword = Globals:get('salus_password', '')\n\n    -- handling username\n    if string.len(self.username) < 4 and string.len(storedUsername) > 3 then\n        self.app:setVariable(\"Username\", storedUsername)\n        self.username = storedUsername\n    elseif (storedUsername == '' and self.username) then\n        Globals:set('salus_username', self.username)\n    end\n    -- handling password\n    if string.len(self.password) < 4 and string.len(storedPassword) > 3 then\n        self.app:setVariable(\"Password\", storedPassword)\n        self.password = storedPassword\n    elseif (storedPassword == '' and self.password) then\n        Globals:set('salus_password', self.password)\n    end\n    -- handling interval\n    if not self.interval or self.interval == \"\" then\n        self.app:setVariable(\"Interval\", 30)\n        self.interval = 30\n    end\nend"
+            "content": "--[[\nConfiguration handler\n@author ikubicki\n]]\nclass 'Config'\n\nfunction Config:new(app)\n    self.app = app\n    self.user = nil\n    self.password = nil\n    self.host = nil\n    self.port = nil\n    self.device_id = nil\n    self.interval = nil\n    self:init()\n    return self\nend\n\nfunction Config:getUser()\n    if self.user and self.user:len() > 3 then\n        return self.user\n    end\n    return nil\nend\n\nfunction Config:getPassword()\n    return self.password\nend\n\nfunction Config:getHost()\n    if self.host and self.host:len() > 3 then\n        return self.host\n    end\n    return nil\nend\n\nfunction Config:getPort()\n    if self.port and string.len(self.port) > 1 then\n        return self.port\n    end\n    return '80'\nend\n\nfunction Config:getDeviceID()\n    return self.device_id\nend\n\nfunction Config:setDeviceID(device_id)\n    self.device_id = device_id\nend\n\nfunction Config:getInterval()\n    return tonumber(self.interval) * 1000\nend\n\n--[[\nThis function takes variables and sets as global variables if those are not set already.\nThis way, adding other devices might be optional and leaves option for users, \nwhat they want to add into HC3 virtual devices.\n]]\nfunction Config:init()\n    self.user = self.app:getVariable('User')\n    self.password = self.app:getVariable('Password')\n    self.host = self.app:getVariable('Host')\n    self.port = self.app:getVariable('Port')\n    self.device_id = self.app:getVariable('DeviceID')\n    self.interval = self.app:getVariable('Interval')\n\n    local storedUsername = Globals:get('salus_username', '')\n    local storedPassword = Globals:get('salus_password', '')\n    local storedHost = Globals:get('salus_host', '')\n    local storedPort = tonumber(Globals:get('salus_port', ''))\n\n    -- handling username\n    if string.len(self.user) < 4 and string.len(storedUsername) > 3 then\n        self.app:setVariable(\"User\", storedUsername)\n        self.user = storedUsername\n    elseif (storedUsername == '' and self.user) then\n        Globals:set('salus_username', self.user)\n    end\n    -- handling password\n    if string.len(self.password) < 4 and string.len(storedPassword) > 3 then\n        self.app:setVariable(\"Password\", storedPassword)\n        self.password = storedPassword\n    elseif (storedPassword == '' and self.password) then\n        Globals:set('salus_password', self.password)\n    end\n    -- handling host\n    if string.len(self.host) < 4 and string.len(storedHost) > 3 then\n        self.app:setVariable(\"Host\", storedHost)\n        self.host = storedHost\n    elseif (storedHost == '' and self.host) then\n        Globals:set('salus_host', self.host)\n    end\n    -- handling port\n    if string.len(self.host) < 2 and string.len(storedPort) > 3 then\n        self.app:setVariable(\"Port\", storedPort)\n        self.port = storedPort\n    elseif (storedPort == '' and self.port) then\n        Globals:set('salus_port', self.port)\n    end\n    -- handling interval\n    if not self.interval or self.interval == \"\" then\n        self.app:setVariable(\"Interval\", 5)\n        self.interval = 5\n    end\nend"
         },
         {
             "name": "HTTPClient",
@@ -174,25 +543,43 @@
             "name": "i18n",
             "isMain": false,
             "isOpen": false,
-            "content": "--[[\nInternationalization tool\n@author ikubicki\n]]\nclass 'i18n'\n\nfunction i18n:new(langCode)\n    if phrases[langCode] == nil then\n        langCode = 'en'\n    end\n    self.phrases = phrases[langCode]\n    return self\nend\n\nfunction i18n:get(key)\n    if self.phrases[key] then\n        return self.phrases[key]\n    end\n    return key\nend\n\nphrases = {\n    pl = {\n        ['name'] = 'Salus IT600 - %s',\n        ['search-devices'] = 'Szukaj urządzeń',\n        ['searching-devices'] = 'Szukam...',\n        ['refresh'] = 'Odśwież dane',\n        ['refreshing'] = 'Odświeżam...',\n        ['device-updated'] = 'Zaktualizowano dane urządzenia',\n        ['last-update'] = 'Ostatnia aktualizacja: %s',\n        ['not-configured'] = 'Urządzenie nie skonfigurowane',\n        ['check-logs'] = 'Zakończono wyszukiwanie. Sprawdź logi tego urządzenia: %s',\n        ['search-row-gateway'] = '__ BRAMKA %s (# %s)',\n        ['search-row-gateway-devices'] = '__ Wykryto %d urządzeń',\n        ['search-row-device'] = '____ URZĄDZENIE %s (DeviceID: %s, Model: %s)',\n        ['heating'] = 'Grzanie',\n        ['off'] = 'Wyłączony',\n    },\n    en = {\n        ['name'] = 'Salus IT600 - %s',\n        ['search-devices'] = 'Search devices',\n        ['searching-devices'] = 'Searching...',\n        ['refresh'] = 'Update data',\n        ['refreshing'] = 'Updating...',\n        ['device-updated'] = 'Device updates',\n        ['last-update'] = 'Last update: %s',\n        ['not-configured'] = 'Device not configured',\n        ['check-logs'] = 'Check device logs (%s) for search results',\n        ['search-row-gateway'] = '__ GATEWAY %s (# %s)',\n        ['search-row-gateway-devices'] = '__ %d devices found',\n        ['search-row-device'] = '____ DEVICE %s (DeviceID: %s, Model: %s)',\n        ['heating'] = 'Heating',\n        ['off'] = 'Off',\n    },\n}"
+            "content": "--[[\nInternationalization tool\n@author ikubicki\n]]\nclass 'i18n'\n\nfunction i18n:new(langCode)\n    if phrases[langCode] == nil then\n        langCode = 'en'\n    end\n    self.phrases = phrases[langCode]\n    return self\nend\n\nfunction i18n:get(key)\n    if self.phrases[key] then\n        return self.phrases[key]\n    end\n    return key\nend\n\nphrases = {\n    pl = {\n        ['name'] = 'Salus - %s',\n        ['search-devices'] = 'Szukaj urządzeń',\n        ['searching-devices'] = 'Szukam...',\n        ['refresh'] = 'Odśwież dane',\n        ['refreshing'] = 'Odświeżam...',\n        ['device-updated'] = 'Zaktualizowano dane urządzenia',\n        ['last-update'] = 'Ostatnia aktualizacja: %s',\n        ['not-configured'] = 'Urządzenie nie skonfigurowane',\n        ['check-select'] = 'Zakończono wyszukiwanie. Zaktualizowano pole wyboru powyżej. Może być wymagane zamknięcie i ponowne otwarcie panelu tego urządzenia.',\n        ['device-selected'] = 'Wybrano urządzenie.',\n        ['heating'] = 'Grzanie',\n        ['off'] = 'Wyłączony',\n        ['temperature-suffix'] = '%s - Temperatura',\n        ['humidity-suffix'] = '%s - Wilgotność',\n    },\n    en = {\n        ['name'] = 'Salus - %s',\n        ['search-devices'] = 'Search devices',\n        ['searching-devices'] = 'Searching...',\n        ['refresh'] = 'Update data',\n        ['refreshing'] = 'Updating...',\n        ['device-updated'] = 'Device updates',\n        ['last-update'] = 'Last update: %s',\n        ['not-configured'] = 'Device not configured',\n        ['check-select'] = 'Search complete. Select field above have been updated. Reopening a popup of this device might be necessary.',\n        ['device-selected'] = 'Device selected.',\n        ['heating'] = 'Heating',\n        ['off'] = 'Off',\n        ['temperature-suffix'] = '%s - Temperature',\n        ['humidity-suffix'] = '%s - Temperature',\n    },\n}"
         },
         {
-            "name": "Salus",
+            "name": "SalusCloud",
             "isMain": false,
             "isOpen": false,
-            "content": "--[[\nSalus IT600 SDK\n@author ikubicki\n]]\nclass 'Salus'\n\nfunction Salus:new(config)\n    self.user = config:getUsername()\n    self.pass = config:getPassword()\n    self.device_id = config:getDeviceID()\n    self.token = Globals:get('salus_token', '')\n    self.token_time = tonumber(Globals:get('salus_token_time', 0))\n    self.http = HTTPClient:new({\n        baseUrl = 'https://eu.salusconnect.io'\n    })\n    return self\nend\n\nfunction Salus:getProperties(callback, failCallback)\n    local properties = {}\n    local batteryLevelCallback = function(response)\n        properties[\"battery\"] = response.value\n        callback(properties)\n    end\n    local holdtypeCallback = function(response)\n        properties[\"holdtype\"] = response.value\n        Salus:batteryLevel(batteryLevelCallback, failCallback)\n    end\n    local runningCallback = function(response)\n        properties[\"running\"] = response.value\n        Salus:holdtype(holdtypeCallback, failCallback)\n    end\n    local humidityCallback = function(response)\n        properties[\"humidity\"] = response.value\n        Salus:running(runningCallback, failCallback)\n    end\n    local heatingSetpointCallback = function(response)\n        properties[\"heatingSetpoint\"] = response.value / 100\n        Salus:humidity(humidityCallback, failCallback)\n    end\n    local temperatureCallback = function(response)\n        properties[\"temperature\"] = response.value / 100\n        Salus:heatingSetpoint(heatingSetpointCallback, failCallback)\n    end\n    local authCallback = function(response)\n        Salus:temperature(temperatureCallback, failCallback)\n    end\n    Salus:auth(authCallback, failCallback)\nend\n\nfunction Salus:searchDevices(callback)\n    local buildGateway = function(data) \n        return {\n            id = data.dsn,\n            name = data.product_name,\n            ip = data.lan_ip,\n            devices = {}\n        }\n    end\n    local buildDevice = function(data)\n        return {\n            id = data.dsn,\n            name = data.product_name,\n            model = data.oem_model,\n        }\n    end\n    local listDevicesCallback = function(response)\n        QuickApp:debug('OK');\n        local gateways = {}\n        -- gateways\n        for _, d in ipairs(response) do\n            if d.device.device_type == 'Gateway' then\n                gateways[d.device.dsn] = buildGateway(d.device)\n            end\n        end\n        -- devices\n        for _, d in ipairs(response) do\n            if d.device.dsn ~= d.device.product_name and d.device.device_type == 'Node' and gateways[d.device.gateway_dsn] ~= nil then\n                table.insert(gateways[d.device.gateway_dsn].devices, buildDevice(d.device))\n            end\n        end\n        callback(gateways)\n    end\n    local authCallback = function(response)\n        Salus:listDevices(listDevicesCallback)\n    end\n    Salus:auth(authCallback)\nend\n\nfunction Salus:batteryLevel(callback, failCallback, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    local fail = function(response)\n        if response.status == 404 then\n            return callback({})\n        end\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull battery level')\n        Salus:setToken('')\n        -- QuickApp:debug(json.encode(response))\n        \n        if attempt < 2 then\n            attempt = attempt + 1\n            fibaro.setTimeout(3000, function()\n                QuickApp:debug('Salus:batteryLevel - Retry attempt #' .. attempt)\n                local authCallback = function(response)\n                    self:batteryLevel(callback, failCallback, attempt)\n                end\n                Salus:auth(authCallback, failCallback)\n            end)\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:BatteryLevel.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:temperature(callback, failCallback, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull temperature')\n        Salus:setToken('')\n        --QuickApp:debug(json.encode(response))\n        \n        if attempt < 2 then\n            attempt = attempt + 1\n            fibaro.setTimeout(3000, function()\n                QuickApp:debug('Salus:temperature - Retry attempt #' .. attempt)\n                local authCallback = function(response)\n                    self:temperature(callback, failCallback, attempt)\n                end\n                Salus:auth(authCallback, failCallback)\n            end)\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:LocalTemperature_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:heatingSetpoint(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull heating setpoint')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:HeatingSetpoint_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:setHeatingSetpoint(heatingSetpoint, callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to update heatingSetpoint')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SetHeatingSetpoint_x100/datapoints.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken(),\n        [\"Content-Type\"] = \"application/json\",\n    }\n    local data = {\n        datapoint = {\n            value = heatingSetpoint * 100\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction Salus:humidity(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull humidity')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SunnySetpoint_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:running(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull mode')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:RunningState.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:holdtype(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull mode')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:HoldType.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:setHoldtype(holdtype, callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to update holdtype')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SetHoldType/datapoints.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken(),\n        [\"Content-Type\"] = \"application/json\",\n    }\n    local data = {\n        datapoint = {\n            value = holdtype\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction Salus:listDevices(callback, fail, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    if fail == nil then\n        local fail = function(response)\n            if failCallback then\n                failCallback(json.encode(response))\n            end\n            QuickApp:error('Unable to pull devices')\n            Salus:setToken('')\n            \n            if attempt < 2 then\n                attempt = attempt + 1\n                fibaro.setTimeout(3000, function()\n                    QuickApp:debug('Salus:listDevices - Retry attempt #' .. attempt)\n                    local authCallback = function(response)\n                        self:listDevices(callback, nil, attempt)\n                    end\n                    Salus:auth(authCallback)\n                end)\n            end\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data)\n        end\n    end\n    local url = \"/apiv1/devices.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. Salus:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction Salus:auth(callback, failCallback)\n    if string.len(self.token) > 1 then\n        -- QuickApp:debug('Already authenticated')\n        if callback ~= nil then\n            callback({})\n        end\n        return\n    end\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to authenticate')\n        Salus:setToken('')\n    end\n    local success = function(response)\n        -- QuickApp:debug(json.encode(response))\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        Salus:setToken(data.access_token)\n        if callback ~= nil then\n            callback(data)\n        end\n    end\n    local url = \"/users/sign_in.json\"\n    local headers = {\n        [\"Content-Type\"] = \"application/json\"\n    }\n    local data = {\n        user = {\n            email = self.user,\n            password = self.pass,\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction Salus:setToken(token)\n    self.token = token\n    self.token_time = os.time(os.date(\"!*t\"))\n    Globals:set('salus_token', token)\n    Globals:set('salus_token_time', self.token_time)\nend\n\nfunction Salus:getToken()\n    if not self:checkTokenTime() then\n        self:setToken('')\n        return ''\n    end\n    if string.len(self.token) > 10 then\n        return self.token\n    elseif string.len(Globals:get('salus_token', '')) > 10 then\n        return Globals:get('salus_token', '')\n    end\n    return ''\nend\n\nfunction Salus:checkTokenTime()\n    if self.token_time < 1 then\n        self.token_time = tonumber(Globals:get('salus_token_time', 0))\n    end\n    return self.token_time > 0 and os.time(os.date(\"!*t\")) - self.token_time < 43200\nend\n\nfunction Salus:translateBatteryLevel(batteryLevel)\n    if batteryLevel > 4 then return 100 end;\n    if batteryLevel == 4 then return 75 end;\n    if batteryLevel == 3 then return 50 end;\n    if batteryLevel == 2 then return 25 end;\n    if batteryLevel > 2 then return 0 end;\nend"
+            "content": "--[[\nSalus IT600 Cloud SDK\n@author ikubicki\n]]\nclass 'SalusCloud'\n\nfunction SalusCloud:new(config)\n    self.user = config:getUser()\n    self.pass = config:getPassword()\n    self.device_id = config:getDeviceID()\n    self.token = Globals:get('salus_token', '')\n    self.token_time = tonumber(Globals:get('salus_token_time', 0))\n    self.http = HTTPClient:new({\n        baseUrl = 'https://eu.salusconnect.io'\n    })\n    return self\nend\n\nfunction SalusCloud:getProperties(callback, failCallback)\n    local properties = {}\n    local batteryLevelCallback = function(response)\n        properties[\"battery\"] = response.value\n        callback(properties)\n    end\n    local holdtypeCallback = function(response)\n        properties[\"holdtype\"] = response.value\n        SalusCloud:batteryLevel(batteryLevelCallback, failCallback)\n    end\n    local runningCallback = function(response)\n        properties[\"running\"] = response.value\n        SalusCloud:holdtype(holdtypeCallback, failCallback)\n    end\n    local humidityCallback = function(response)\n        properties[\"humidity\"] = response.value\n        SalusCloud:running(runningCallback, failCallback)\n    end\n    local heatingSetpointCallback = function(response)\n        properties[\"heatingSetpoint\"] = response.value / 100\n        SalusCloud:humidity(humidityCallback, failCallback)\n    end\n    local temperatureCallback = function(response)\n        properties[\"temperature\"] = response.value / 100\n        SalusCloud:heatingSetpoint(heatingSetpointCallback, failCallback)\n    end\n    local authCallback = function(response)\n        SalusCloud:temperature(temperatureCallback, failCallback)\n    end\n    SalusCloud:auth(authCallback, failCallback)\nend\n\nfunction SalusCloud:searchDevices(callback)\n    local buildGateway = function(data) \n        return {\n            id = data.dsn,\n            name = data.product_name,\n            ip = data.lan_ip,\n            devices = {}\n        }\n    end\n    local buildDevice = function(data)\n        return {\n            id = data.dsn,\n            name = data.product_name,\n            model = data.oem_model,\n        }\n    end\n    local listDevicesCallback = function(response)\n        QuickApp:debug('OK');\n        local gateways = {}\n        -- gateways\n        for _, d in ipairs(response) do\n            if d.device.device_type == 'Gateway' then\n                gateways[d.device.dsn] = buildGateway(d.device)\n            end\n        end\n        -- devices\n        for _, d in ipairs(response) do\n            if d.device.dsn ~= d.device.product_name and d.device.device_type == 'Node' and gateways[d.device.gateway_dsn] ~= nil then\n                table.insert(gateways[d.device.gateway_dsn].devices, buildDevice(d.device))\n            end\n        end\n        callback(gateways)\n    end\n    local authCallback = function(response)\n        SalusCloud:listDevices(listDevicesCallback)\n    end\n    SalusCloud:auth(authCallback)\nend\n\nfunction SalusCloud:batteryLevel(callback, failCallback, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    local fail = function(response)\n        if response.status == 404 then\n            return callback({})\n        end\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull battery level')\n        SalusCloud:setToken('')\n        -- QuickApp:debug(json.encode(response))\n        \n        if attempt < 2 then\n            attempt = attempt + 1\n            fibaro.setTimeout(3000, function()\n                QuickApp:debug('SalusCloud:batteryLevel - Retry attempt #' .. attempt)\n                local authCallback = function(response)\n                    self:batteryLevel(callback, failCallback, attempt)\n                end\n                SalusCloud:auth(authCallback, failCallback)\n            end)\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:BatteryLevel.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:temperature(callback, failCallback, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull temperature')\n        SalusCloud:setToken('')\n        --QuickApp:debug(json.encode(response))\n        \n        if attempt < 2 then\n            attempt = attempt + 1\n            fibaro.setTimeout(3000, function()\n                QuickApp:debug('SalusCloud:temperature - Retry attempt #' .. attempt)\n                local authCallback = function(response)\n                    self:temperature(callback, failCallback, attempt)\n                end\n                SalusCloud:auth(authCallback, failCallback)\n            end)\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:LocalTemperature_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:heatingSetpoint(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull heating setpoint')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:HeatingSetpoint_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:setHeatingSetpoint(heatingSetpoint, callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to update heatingSetpoint')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SetHeatingSetpoint_x100/datapoints.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken(),\n        [\"Content-Type\"] = \"application/json\",\n    }\n    local data = {\n        datapoint = {\n            value = heatingSetpoint * 100\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction SalusCloud:humidity(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull humidity')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SunnySetpoint_x100.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:running(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull mode')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:RunningState.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:holdtype(callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to pull mode')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:HoldType.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:setHoldtype(holdtype, callback, failCallback)\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to update holdtype')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data.property)\n        end\n    end\n    local url = \"/apiv1/dsns/\" .. self.device_id .. \"/properties/ep_9:sIT600TH:SetHoldType/datapoints.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken(),\n        [\"Content-Type\"] = \"application/json\",\n    }\n    local data = {\n        datapoint = {\n            value = holdtype\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction SalusCloud:listDevices(callback, fail, attempt)\n    if attempt == nil then\n        attempt = 1\n    end\n    if fail == nil then\n        local fail = function(response)\n            if failCallback then\n                failCallback(json.encode(response))\n            end\n            QuickApp:error('Unable to pull devices')\n            SalusCloud:setToken('')\n            \n            if attempt < 2 then\n                attempt = attempt + 1\n                fibaro.setTimeout(3000, function()\n                    QuickApp:debug('SalusCloud:listDevices - Retry attempt #' .. attempt)\n                    local authCallback = function(response)\n                        self:listDevices(callback, nil, attempt)\n                    end\n                    SalusCloud:auth(authCallback)\n                end)\n            end\n        end\n    end\n    local success = function(response)\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        if callback ~= nil then\n            callback(data)\n        end\n    end\n    local url = \"/apiv1/devices.json\"\n    local headers = {\n        Authorization = \"Bearer \" .. SalusCloud:getToken()\n    }\n    self.http:get(url, success, fail, headers)\nend\n\nfunction SalusCloud:auth(callback, failCallback)\n    if string.len(self.token) > 1 then\n        -- QuickApp:debug('Already authenticated')\n        if callback ~= nil then\n            callback({})\n        end\n        return\n    end\n    local fail = function(response)\n        if failCallback then\n            failCallback(json.encode(response))\n        end\n        QuickApp:error('Unable to authenticate')\n        SalusCloud:setToken('')\n    end\n    local success = function(response)\n        -- QuickApp:debug(json.encode(response))\n        if response.status > 299 then\n            fail(response)\n            return\n        end\n        local data = json.decode(response.data)\n        SalusCloud:setToken(data.access_token)\n        if callback ~= nil then\n            callback(data)\n        end\n    end\n    local url = \"/users/sign_in.json\"\n    local headers = {\n        [\"Content-Type\"] = \"application/json\"\n    }\n    local data = {\n        user = {\n            email = self.user,\n            password = self.pass,\n        }\n    }\n    self.http:post(url, data, success, fail, headers)\nend\n\nfunction SalusCloud:setToken(token)\n    self.token = token\n    self.token_time = os.time(os.date(\"!*t\"))\n    Globals:set('salus_token', token)\n    Globals:set('salus_token_time', self.token_time)\nend\n\nfunction SalusCloud:getToken()\n    if not self:checkTokenTime() then\n        self:setToken('')\n        return ''\n    end\n    if string.len(self.token) > 10 then\n        return self.token\n    elseif string.len(Globals:get('salus_token', '')) > 10 then\n        return Globals:get('salus_token', '')\n    end\n    return ''\nend\n\nfunction SalusCloud:checkTokenTime()\n    if self.token_time < 1 then\n        self.token_time = tonumber(Globals:get('salus_token_time', 0))\n    end\n    return self.token_time > 0 and os.time(os.date(\"!*t\")) - self.token_time < 43200\nend\n\n"
         },
         {
-            "name": "SalusChildDevice",
+            "name": "Utils",
             "isMain": false,
             "isOpen": false,
-            "content": "class 'SalusChildDevice' (QuickAppChild)\n\nfunction SalusChildDevice:__init(device)\n    QuickAppChild.__init(self, device)\nend\n\nfunction SalusChildDevice:setValue(value)\n    self:updateProperty(\"value\", value)\nend\n\nfunction SalusChildDevice:setState(value)\n    self:updateProperty(\"state\", value > 0)\nend"
+            "content": "--[[\nLUA utilities\n@author ikubicki\n]]\nclass 'Utils'\n\nfunction Utils:new()\n    return self\nend\n\nfunction Utils:contains(a, n)\n    for k, v in pairs(a) do\n        if v == n then\n            return k\n        end\n    end\n    return false\nend\n\n-- borrowed from https://github.com/jangabrielsson/TQAE\nfunction Utils:base64(data)\n    __assert_type(data,\"string\")\n    local bC='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'\n    return ((data:gsub('.', function(x) \n            local r,b='',x:byte() for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end\n            return r;\n        end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)\n        if (#x < 6) then return '' end\n        local c=0\n        for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end\n        return bC:sub(c+1,c+1)\n    end)..({ '', '==', '=' })[#data%3+1])\nend"
         },
         {
-            "name": "utils",
+            "name": "SalusProxy",
             "isMain": false,
             "isOpen": false,
-            "content": "--[[\nLUA utilities\n@author ikubicki\n]]\nclass 'utils'\n\nfunction utils:new()\n    return self\nend\n\nfunction utils:contains(a, n)\n    for k, v in pairs(a) do\n        if v == n then\n            return k\n        end\n    end\n    return false\nend"
+            "content": "--[[\nSalus IT600 Proxy SDK\n@author ikubicki\n]]\nclass 'SalusProxy'\n\nfunction SalusProxy:new(config)\n    self.config = config\n    self.user = config:getUser()\n    self.pass = config:getPassword()\n    self.device_id = config:getDeviceID()\n    self.token = Utils:base64(config:getUser() .. ':' .. config:getPassword())\n    self.http = HTTPClient:new({\n        baseUrl = 'http://' .. config:getHost() .. ':' .. config:getPort() .. '/api/v1'\n    })\n    return self\nend\n\nfunction SalusProxy:getProperties(ok, nok)\n    local h = function(r)\n        if (r.status > 200) then\n            return nok(r)\n        end\n        local data = json.decode(r.data)\n        local running = 0\n        if data.isRunning then running = 1 end\n        return ok({\n            id = data.id,\n            name = data.name,\n            model = data.model,\n            heatingSetpoint = data.temperature,\n            temperature = data.currentTemperature,\n            humidity = data.humidity,\n            running = running,\n            holdtype = data.mode,\n            battery = data.battery,\n        })\n    end\n    local headers = {\n        Authorization = 'Basic ' .. self.token,\n        ['Content-Type'] = 'application/json',\n    }\n    if not nok then nok = function() end end\n    self.http:get('/devices/' .. self.config:getDeviceID(), h, nok, headers)\nend\n\nfunction SalusProxy:searchDevices(ok, nok)\n    local h = function(r)\n        if (r.status > 200) then\n            return nok(r)\n        end\n        return ok({{\n            name = 'proxy',\n            devices = json.decode(r.data)\n        }})\n    end\n    local headers = {\n        Authorization = 'Basic ' .. self.token,\n        ['Content-Type'] = 'application/json',\n    }\n    if not nok then nok = function() end end\n    self.http:get('/devices', h, nok, headers)\nend\n\nfunction SalusProxy:setHeatingSetpoint(setpoint, ok, nok)\nlocal h = function(r)\n        if (r.status > 200) then\n            return nok(r)\n        end\n        return ok({{\n            name = 'proxy',\n            devices = json.decode(r.data)\n        }})\n    end\n    local headers = {\n        Authorization = 'Basic ' .. self.token,\n        ['Content-Type'] = 'application/json',\n    }\n    local d = {\n        temperature = setpoint,\n    }\n    if not nok then nok = function() end end\n    self.http:post('/devices/' .. self.config:getDeviceID() .. '/temperature', d, h, nok, headers)\nend\n\n\nfunction SalusProxy:setHoldtype(holdtype, ok, nok)\n    local h = function(r)\n        if (r.status > 200) then\n            return nok(r)\n        end\n        return ok({{\n            name = 'proxy',\n            devices = json.decode(r.data)\n        }})\n    end\n    local headers = {\n        Authorization = 'Basic ' .. self.token,\n        ['Content-Type'] = 'application/json',\n    }\n    local d = {\n        mode = holdtype,\n    }\n    if not nok then nok = function() end end\n    self.http:post('/devices/' .. self.config:getDeviceID() .. '/mode', d, h, nok, headers)\nend"
+        },
+        {
+            "name": "SalusTemperature",
+            "isMain": false,
+            "isOpen": false,
+            "content": "--[[\nSalus temperature sendor child device class\n@author ikubicki\n]]\nclass 'SalusTemperature' (QuickAppChild)\n\nfunction SalusTemperature:__init(device)\n    QuickAppChild.__init(self, device)\nend\n\nfunction SalusTemperature:setName(name)\n    api.put('/devices/' .. self.id, {\n        name = name,\n    })\nend\n\nfunction SalusTemperature:setValue(value)\n    self:updateProperty(\"value\", value)\nend\n"
+        },
+        {
+            "name": "SalusHumidity",
+            "isMain": false,
+            "isOpen": false,
+            "content": "--[[\nSalus humidity sendor child device class\n@author ikubicki\n]]\n\nclass 'SalusHumidity' (QuickAppChild)\n\nfunction SalusHumidity:__init(device)\n    QuickAppChild.__init(self, device)\nend\n\nfunction SalusHumidity:setName(name)\n    api.put('/devices/' .. self.id, {\n        name = name,\n    })\nend\n\nfunction SalusHumidity:setValue(value)\n    self:updateProperty(\"value\", value)\nend\n"
+        },
+        {
+            "name": "SalusUtils",
+            "isMain": false,
+            "isOpen": false,
+            "content": "--[[\nSalus utilities\n@author ikubicki\n]]\nclass 'SalusUtils'\n\nfunction SalusUtils:translateHoldType(holdtype)\n    if holdtype == 2 then\n        return 'Heat'\n    elseif holdtype == 7 then\n        return 'Off'\n    end\n    return 'Auto' -- 0 or 1\nend\n\nfunction SalusUtils:translateBattery(battery)\n    if battery > 4 then return 100 end;\n    if battery == 4 then return 75 end;\n    if battery == 3 then return 50 end;\n    if battery == 2 then return 25 end;\n    if battery > 2 then return 0 end;\nend\n\nfunction SalusUtils:translateMode(mode)\n    if mode == 'Off' then\n        return 7\n    elseif mode == 'Heat' then\n        return 2\n    end\n    return 0\nend"
         }
     ]
 }

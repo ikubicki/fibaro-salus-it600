@@ -1,11 +1,11 @@
 --[[
-Salus IT600 SDK
+Salus IT600 Cloud SDK
 @author ikubicki
 ]]
-class 'Salus'
+class 'SalusCloud'
 
-function Salus:new(config)
-    self.user = config:getUsername()
+function SalusCloud:new(config)
+    self.user = config:getUser()
     self.pass = config:getPassword()
     self.device_id = config:getDeviceID()
     self.token = Globals:get('salus_token', '')
@@ -16,7 +16,7 @@ function Salus:new(config)
     return self
 end
 
-function Salus:getProperties(callback, failCallback)
+function SalusCloud:getProperties(callback, failCallback)
     local properties = {}
     local batteryLevelCallback = function(response)
         properties["battery"] = response.value
@@ -24,31 +24,31 @@ function Salus:getProperties(callback, failCallback)
     end
     local holdtypeCallback = function(response)
         properties["holdtype"] = response.value
-        Salus:batteryLevel(batteryLevelCallback, failCallback)
+        SalusCloud:batteryLevel(batteryLevelCallback, failCallback)
     end
     local runningCallback = function(response)
         properties["running"] = response.value
-        Salus:holdtype(holdtypeCallback, failCallback)
+        SalusCloud:holdtype(holdtypeCallback, failCallback)
     end
     local humidityCallback = function(response)
         properties["humidity"] = response.value
-        Salus:running(runningCallback, failCallback)
+        SalusCloud:running(runningCallback, failCallback)
     end
     local heatingSetpointCallback = function(response)
         properties["heatingSetpoint"] = response.value / 100
-        Salus:humidity(humidityCallback, failCallback)
+        SalusCloud:humidity(humidityCallback, failCallback)
     end
     local temperatureCallback = function(response)
         properties["temperature"] = response.value / 100
-        Salus:heatingSetpoint(heatingSetpointCallback, failCallback)
+        SalusCloud:heatingSetpoint(heatingSetpointCallback, failCallback)
     end
     local authCallback = function(response)
-        Salus:temperature(temperatureCallback, failCallback)
+        SalusCloud:temperature(temperatureCallback, failCallback)
     end
-    Salus:auth(authCallback, failCallback)
+    SalusCloud:auth(authCallback, failCallback)
 end
 
-function Salus:searchDevices(callback)
+function SalusCloud:searchDevices(callback)
     local buildGateway = function(data) 
         return {
             id = data.dsn,
@@ -82,12 +82,12 @@ function Salus:searchDevices(callback)
         callback(gateways)
     end
     local authCallback = function(response)
-        Salus:listDevices(listDevicesCallback)
+        SalusCloud:listDevices(listDevicesCallback)
     end
-    Salus:auth(authCallback)
+    SalusCloud:auth(authCallback)
 end
 
-function Salus:batteryLevel(callback, failCallback, attempt)
+function SalusCloud:batteryLevel(callback, failCallback, attempt)
     if attempt == nil then
         attempt = 1
     end
@@ -99,17 +99,17 @@ function Salus:batteryLevel(callback, failCallback, attempt)
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull battery level')
-        Salus:setToken('')
+        SalusCloud:setToken('')
         -- QuickApp:debug(json.encode(response))
         
         if attempt < 2 then
             attempt = attempt + 1
             fibaro.setTimeout(3000, function()
-                QuickApp:debug('Salus:batteryLevel - Retry attempt #' .. attempt)
+                QuickApp:debug('SalusCloud:batteryLevel - Retry attempt #' .. attempt)
                 local authCallback = function(response)
                     self:batteryLevel(callback, failCallback, attempt)
                 end
-                Salus:auth(authCallback, failCallback)
+                SalusCloud:auth(authCallback, failCallback)
             end)
         end
     end
@@ -125,12 +125,12 @@ function Salus:batteryLevel(callback, failCallback, attempt)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:BatteryLevel.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:temperature(callback, failCallback, attempt)
+function SalusCloud:temperature(callback, failCallback, attempt)
     if attempt == nil then
         attempt = 1
     end
@@ -139,17 +139,17 @@ function Salus:temperature(callback, failCallback, attempt)
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull temperature')
-        Salus:setToken('')
+        SalusCloud:setToken('')
         --QuickApp:debug(json.encode(response))
         
         if attempt < 2 then
             attempt = attempt + 1
             fibaro.setTimeout(3000, function()
-                QuickApp:debug('Salus:temperature - Retry attempt #' .. attempt)
+                QuickApp:debug('SalusCloud:temperature - Retry attempt #' .. attempt)
                 local authCallback = function(response)
                     self:temperature(callback, failCallback, attempt)
                 end
-                Salus:auth(authCallback, failCallback)
+                SalusCloud:auth(authCallback, failCallback)
             end)
         end
     end
@@ -165,18 +165,18 @@ function Salus:temperature(callback, failCallback, attempt)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:LocalTemperature_x100.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:heatingSetpoint(callback, failCallback)
+function SalusCloud:heatingSetpoint(callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull heating setpoint')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -190,18 +190,18 @@ function Salus:heatingSetpoint(callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:HeatingSetpoint_x100.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:setHeatingSetpoint(heatingSetpoint, callback, failCallback)
+function SalusCloud:setHeatingSetpoint(heatingSetpoint, callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to update heatingSetpoint')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -215,7 +215,7 @@ function Salus:setHeatingSetpoint(heatingSetpoint, callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:SetHeatingSetpoint_x100/datapoints.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken(),
+        Authorization = "Bearer " .. SalusCloud:getToken(),
         ["Content-Type"] = "application/json",
     }
     local data = {
@@ -226,13 +226,13 @@ function Salus:setHeatingSetpoint(heatingSetpoint, callback, failCallback)
     self.http:post(url, data, success, fail, headers)
 end
 
-function Salus:humidity(callback, failCallback)
+function SalusCloud:humidity(callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull humidity')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -246,18 +246,18 @@ function Salus:humidity(callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:SunnySetpoint_x100.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:running(callback, failCallback)
+function SalusCloud:running(callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull mode')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -271,18 +271,18 @@ function Salus:running(callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:RunningState.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:holdtype(callback, failCallback)
+function SalusCloud:holdtype(callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to pull mode')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -296,18 +296,18 @@ function Salus:holdtype(callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:HoldType.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:setHoldtype(holdtype, callback, failCallback)
+function SalusCloud:setHoldtype(holdtype, callback, failCallback)
     local fail = function(response)
         if failCallback then
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to update holdtype')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         if response.status > 299 then
@@ -321,7 +321,7 @@ function Salus:setHoldtype(holdtype, callback, failCallback)
     end
     local url = "/apiv1/dsns/" .. self.device_id .. "/properties/ep_9:sIT600TH:SetHoldType/datapoints.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken(),
+        Authorization = "Bearer " .. SalusCloud:getToken(),
         ["Content-Type"] = "application/json",
     }
     local data = {
@@ -332,7 +332,7 @@ function Salus:setHoldtype(holdtype, callback, failCallback)
     self.http:post(url, data, success, fail, headers)
 end
 
-function Salus:listDevices(callback, fail, attempt)
+function SalusCloud:listDevices(callback, fail, attempt)
     if attempt == nil then
         attempt = 1
     end
@@ -342,16 +342,16 @@ function Salus:listDevices(callback, fail, attempt)
                 failCallback(json.encode(response))
             end
             QuickApp:error('Unable to pull devices')
-            Salus:setToken('')
+            SalusCloud:setToken('')
             
             if attempt < 2 then
                 attempt = attempt + 1
                 fibaro.setTimeout(3000, function()
-                    QuickApp:debug('Salus:listDevices - Retry attempt #' .. attempt)
+                    QuickApp:debug('SalusCloud:listDevices - Retry attempt #' .. attempt)
                     local authCallback = function(response)
                         self:listDevices(callback, nil, attempt)
                     end
-                    Salus:auth(authCallback)
+                    SalusCloud:auth(authCallback)
                 end)
             end
         end
@@ -368,12 +368,12 @@ function Salus:listDevices(callback, fail, attempt)
     end
     local url = "/apiv1/devices.json"
     local headers = {
-        Authorization = "Bearer " .. Salus:getToken()
+        Authorization = "Bearer " .. SalusCloud:getToken()
     }
     self.http:get(url, success, fail, headers)
 end
 
-function Salus:auth(callback, failCallback)
+function SalusCloud:auth(callback, failCallback)
     if string.len(self.token) > 1 then
         -- QuickApp:debug('Already authenticated')
         if callback ~= nil then
@@ -386,7 +386,7 @@ function Salus:auth(callback, failCallback)
             failCallback(json.encode(response))
         end
         QuickApp:error('Unable to authenticate')
-        Salus:setToken('')
+        SalusCloud:setToken('')
     end
     local success = function(response)
         -- QuickApp:debug(json.encode(response))
@@ -395,7 +395,7 @@ function Salus:auth(callback, failCallback)
             return
         end
         local data = json.decode(response.data)
-        Salus:setToken(data.access_token)
+        SalusCloud:setToken(data.access_token)
         if callback ~= nil then
             callback(data)
         end
@@ -413,14 +413,14 @@ function Salus:auth(callback, failCallback)
     self.http:post(url, data, success, fail, headers)
 end
 
-function Salus:setToken(token)
+function SalusCloud:setToken(token)
     self.token = token
     self.token_time = os.time(os.date("!*t"))
     Globals:set('salus_token', token)
     Globals:set('salus_token_time', self.token_time)
 end
 
-function Salus:getToken()
+function SalusCloud:getToken()
     if not self:checkTokenTime() then
         self:setToken('')
         return ''
@@ -433,17 +433,10 @@ function Salus:getToken()
     return ''
 end
 
-function Salus:checkTokenTime()
+function SalusCloud:checkTokenTime()
     if self.token_time < 1 then
         self.token_time = tonumber(Globals:get('salus_token_time', 0))
     end
     return self.token_time > 0 and os.time(os.date("!*t")) - self.token_time < 43200
 end
 
-function Salus:translateBatteryLevel(batteryLevel)
-    if batteryLevel > 4 then return 100 end;
-    if batteryLevel == 4 then return 75 end;
-    if batteryLevel == 3 then return 50 end;
-    if batteryLevel == 2 then return 25 end;
-    if batteryLevel > 2 then return 0 end;
-end
