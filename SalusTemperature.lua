@@ -1,5 +1,5 @@
 --[[
-Salus temperature sendor child device class
+Salus temperature sensor child device class
 @author ikubicki
 ]]
 class 'SalusTemperature' (QuickAppChild)

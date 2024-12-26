@@ -35,6 +35,7 @@ phrases = {
         ['off'] = 'Wyłączony',
         ['temperature-suffix'] = '%s - Temperatura',
         ['humidity-suffix'] = '%s - Wilgotność',
+        ['valve-suffix'] = '%s - Zawór',
     },
     en = {
         ['name'] = 'Salus - %s',
@@ -50,6 +51,7 @@ phrases = {
         ['heating'] = 'Heating',
         ['off'] = 'Off',
         ['temperature-suffix'] = '%s - Temperature',
-        ['humidity-suffix'] = '%s - Temperature',
+        ['humidity-suffix'] = '%s - Humidity',
+        ['valve-suffix'] = '%s - Valve',
     },
 }

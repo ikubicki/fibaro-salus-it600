@@ -1,6 +1,6 @@
 # Salus IT600 thermostats integration
 
-Virtual device that allow to control Salus IT600 thermostats. It creates three child devices that show current temperature and humidity. The previous binary switch was removed and replaced with operating status on main device.
+Virtual device that allow to control Salus IT600 thermostats. It creates three child devices that show current temperature, humidity and a valve that indicates operating state of the thermostat.
 
 Due to discontinuation of the cloud access, it is necessary to switch to a local mode in Salus Gateway and use a proxy solution.
 
@@ -41,6 +41,9 @@ If you're installing another device, your User, Password Host and Port variables
 Salus API is locking account for 30 minutes after few invalid login attempts. If you'll change your password, virtual devices may lock your account.
 
 ## Change
+
+### v.2.1.0
+ - Adding valve child device
 
 ### v.2.0.0
  - Uses local mode

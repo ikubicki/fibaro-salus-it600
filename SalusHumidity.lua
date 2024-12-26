@@ -1,5 +1,5 @@
 --[[
-Salus humidity sendor child device class
+Salus humidity sensor child device class
 @author ikubicki
 ]]
 

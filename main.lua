@@ -1,7 +1,7 @@
 --[[
 Salus IT600 thermostats integration
 @author ikubicki
-@version 2.0.0
+@version 2.1.0
 ]]
 
 local REFRESH_BUTTON = "button2_2"
@@ -43,6 +43,7 @@ function QuickApp:onInit()
     self:initChildDevices({
         ["com.fibaro.temperatureSensor"] = SalusTemperature,
         ["com.fibaro.humiditySensor"] = SalusHumidity,
+        ["com.fibaro.binarySwitch"] = SalusValve,
     })
     for id, device in pairs(self.childDevices) do
         self.childrenIds[device.type] = id
@@ -51,15 +52,28 @@ function QuickApp:onInit()
     if string.len(self.config:getDeviceID()) > 10 then
         if self.childrenIds["com.fibaro.temperatureSensor"] == nil then
             local child = self:createChildDevice({
-                name = self.name .. ' Temperature',
+                name = string.format(self.i18n:get('temperature-suffix'), self.name),
                 type = "com.fibaro.temperatureSensor",
+                initialInterfaces = {"battery"},
             }, SalusTemperature)
         end
         if self.childrenIds["com.fibaro.humiditySensor"] == nil then
             local child = self:createChildDevice({
-                name = self.name .. ' Humidity',
+                name = string.format(self.i18n:get('humidity-suffix'), self.name),
                 type = "com.fibaro.humiditySensor",
+                initialInterfaces = {"battery"},
             }, SalusHumidity)
+        end
+        if self.childrenIds["com.fibaro.binarySwitch"] == nil then
+            local child = self:createChildDevice({
+                name = string.format(self.i18n:get('valve-suffix'), self.name),
+                type = "com.fibaro.binarySwitch",
+                initialInterfaces = {"battery"},
+                initialProperties = {
+                    categories = {"climate"},
+                    deviceRole = "Valve",
+                },
+            }, SalusValve)
         end
         self:run()
     else 
@@ -119,27 +133,33 @@ function QuickApp:pullDataFromCloud()
         self.failover = false
         self:updateView(TITLE_LABEL, "text", "Salus " .. properties.model .. ' - ' .. properties.name)
         self:updateView(REFRESH_BUTTON, "text", self.i18n:get('refresh'))
+
+        local operatingState = 'Idle'
+        local isRunningValue = false
+        if properties.running and properties.running > 0 then
+            operatingState = 'Heating'
+            isRunningValue = true
+        end
         if self.childrenIds["com.fibaro.temperatureSensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.temperatureSensor"]]:setValue(properties.temperature)
+            self.childDevices[self.childrenIds["com.fibaro.temperatureSensor"]]:updateProperty("batteryLevel", SalusUtils:translateBattery(properties.battery))
             label2Text = properties.temperature .. "C / " .. properties.heatingSetpoint .. "C" 
         end
         if self.childrenIds["com.fibaro.humiditySensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.humiditySensor"]]:setValue(properties.humidity)
+            self.childDevices[self.childrenIds["com.fibaro.humiditySensor"]]:updateProperty("batteryLevel", SalusUtils:translateBattery(properties.battery))
             label2Text = label2Text .. " / " .. properties.humidity .. "%"
         end
-        local operatingState = 'Idle'
-        local isRunningValue = 0
-        if properties.running and properties.running > 0 then
-            operatingState = 'Heating'
-            isRunningValue = 1
+        if self.childrenIds["com.fibaro.binarySwitch"] ~= nil then
+            self.childDevices[self.childrenIds["com.fibaro.binarySwitch"]]:setValue(isRunningValue)
+            self.childDevices[self.childrenIds["com.fibaro.binarySwitch"]]:updateProperty("batteryLevel", SalusUtils:translateBattery(properties.battery))
         end
-        self:updateProperty("thermostatOperatingState", operatingState)
-        if isRunningValue > 0 then
+        if isRunningValue then
             label2Text = self.i18n:get('heating') .. " / " .. label2Text
         else
             label2Text = self.i18n:get('off') .. " / " .. label2Text
         end
-
+        self:updateProperty("thermostatOperatingState", operatingState)
         self:updateProperty("thermostatMode", SalusUtils:translateHoldType(properties.holdtype))
         self:updateProperty("heatingThermostatSetpoint", properties.heatingSetpoint)
         self:updateView(STATUS_LABEL, "text", string.format(self.i18n:get('last-update'), os.date('%Y-%m-%d %H:%M:%S')))
@@ -180,8 +200,11 @@ function QuickApp:searchEvent(param)
         self:updateView(STATUS_LABEL, "text", string.format(self.i18n:get('check-select')))
     end
     local nok = function(r)
+        local status = '0'
+        QuickApp:debug(r)
+        if r and r.status then status = r.status end
         self:updateView(SEARCH_BUTTON, "text", self.i18n:get('search-devices'))
-        self:updateView(STATUS_LABEL, "text", r.status .. ": Unable to pull devices")
+        self:updateView(STATUS_LABEL, "text", status .. ": Unable to pull devices")
     end
     self.sdk:searchDevices(searchDevicesCallback, nok)
 end
@@ -201,6 +224,11 @@ function QuickApp:selectDeviceEvent(args)
         if self.childrenIds["com.fibaro.humiditySensor"] ~= nil then
             self.childDevices[self.childrenIds["com.fibaro.humiditySensor"]]:setName(
                 string.format(self.i18n:get('humidity-suffix'), p.name)
+            )
+        end
+        if self.childrenIds["com.fibaro.binarySwitch"] ~= nil then
+            self.childDevices[self.childrenIds["com.fibaro.binarySwitch"]]:setName(
+                string.format(self.i18n:get('valve-suffix'), p.name)
             )
         end
         self:setName(p.name)
